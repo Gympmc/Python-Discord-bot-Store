@@ -7,6 +7,7 @@ class CogSetslot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     @commands.command()
+    @commands.has_role("shopy seller")
     async def setslot(self, ctx):
         guild_id = ctx.guild.id  # get guild id
         await ctx.send("Please enter the slot number")
@@ -29,7 +30,7 @@ class CogSetslot(commands.Cog):
             NAME = await self.bot.wait_for("message", timeout=30, check=check)
             slot_name = NAME.content
             await ctx.send("Please enter the description")
-            DESC = await self.bot.wait_for("message", timeout=60, check=check)
+            DESC = await self.bot.wait_for("message", timeout=120, check=check)
             slot_desc = DESC.content
             await ctx.send("Please enter the price")
             PRICE = await self.bot.wait_for("message", timeout=30, check=check)
@@ -97,9 +98,16 @@ class CogSetslot(commands.Cog):
                 json.dump(guilds_data, w)
 
         elif slot_number != "1" or "2" or "3" or "4" or "5" or "6" or "7" or "8" or "9" or "10":
-            await ctx.send("For more slots, buy Tarzan Premium ! ( t!premium )")
+            await ctx.send("Invalid slot (max 10) (premium soon)")
         elif slot_number == str:
             await ctx.send("Please enter a correct number /!\ ")
+    """
+    except discord.ext.commands.errors.MissingRole:
+        missing_permission_embed = discord.Embed(title="Missing Permissions", description="<@{}>, you missing permissions to execute this command !")
+        missing_permission_embed.set_thumbnail("https://cdn.discordapp.com/attachments/817465631678660641/817480862420697108/store.png")
+        await ctx.send(embed=missing_permission_embed)
+    """
+
 
 
 def setup(bot):

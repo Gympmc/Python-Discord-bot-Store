@@ -2,6 +2,9 @@ import discord
 from discord.ext import commands
 import json
 import os
+from discord.ext.commands import MissingRole
+from discord.ext.commands import MissingPermissions
+from discord.ext.commands import CommandNotFound
 
 settings = json.load(open("Settings/settings.json"))
 token = json.load(open("Settings/token.json"))
@@ -18,6 +21,18 @@ async def on_ready():
     print("        Bot ONLINE !         ")
     print("--/////////////////////////--")
 
+bot.remove_command("help")
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, MissingPermissions):
+        await ctx.send("You are missing permission(s) to run this command.")
+    elif isinstance(error, MissingRole):
+        await ctx.send("You are missing permission(s) to run this command.")
+    elif isinstance(error, CommandNotFound):
+        await ctx.send("Unknown command, type s!shopy.")
+    else:
+        raise error
 @bot.event
 async def on_guild_join(guild = discord.Guild):
     await guild.create_role(name="shopy seller", reason=None)

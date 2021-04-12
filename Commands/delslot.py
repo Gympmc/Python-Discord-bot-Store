@@ -7,6 +7,7 @@ class CogDelSlot(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
     @commands.command()
+    @commands.has_role("shopy seller")
     async def delslot(self, ctx):
         await ctx.send("Please enter the slot number")
 
