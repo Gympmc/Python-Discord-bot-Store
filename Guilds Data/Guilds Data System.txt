@@ -1,1 +1,1 @@
-Each folder is the id of a guild ;)
+Each folder is the id of a guild and each guild-folder contain slots properties of the guild.
